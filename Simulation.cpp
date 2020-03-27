@@ -5,8 +5,8 @@
 #include <iostream>
 #include "grafic.h"
 
-//Crea e inicializa un puntero a esctructura Sim (Simulation).
-//Dependiendo del modo, pueden o no inicializarse el timer, el display y la event queue.
+/*Crea e inicializa un puntero a esctructura Sim (Simulation).
+Dependiendo del modo, pueden o no inicializarse el timer, el display y la event queue. */
 Sim* createSimulation(unsigned int count, unsigned int width, unsigned int height, int mode) {
 	Sim* Simulation = new (std::nothrow) Sim;
 	
@@ -34,8 +34,8 @@ Sim* createSimulation(unsigned int count, unsigned int width, unsigned int heigh
 		}
 	}
 
-	//Si se pudo crear, e independientemente del modo, setea altura, ancho, puntero a 
-	//estructura Baldosa (array Piso), puntero a estructura Robot (array Robs) y cantidad de robots.
+	/*Si se pudo crear, e independientemente del modo, setea altura, ancho, puntero a 
+	estructura Baldosa (array Piso), puntero a estructura Robot (array Robs) y cantidad de robots. */
 	if (Simulation) {
 		Simulation->height = height;
 		Simulation->width = width;
@@ -79,10 +79,16 @@ unsigned int simulate(Sim* s,int mode) {
 		while (!isFloorClean(s->Piso, s->width, s->height)) {
 			if (al_get_next_event(s->Queue, &evento) && evento.type == ALLEGRO_EVENT_TIMER) {
 				for (int i = 0; i < s->robotCount; i++) {
-					updateGrid(s->width, s->height, s->Piso, s->Robs, s->robotCount);	//Actualiza gráficos.
-					moveRobot(s->Robs+i, s->Piso, s->width, s->height);					//Mueve robots.
+
+					//Actualiza gráficos.
+					updateGrid(s->width, s->height, s->Piso, s->Robs, s->robotCount);	
+
+					//Mueve robots.
+					moveRobot(s->Robs+i, s->Piso, s->width, s->height);					
 				}
-				ticks++;			//En cada vuelta, se incrementa en 1 la cantidad de ticks.
+
+				//En cada vuelta, se incrementa en 1 la cantidad de ticks.
+				ticks++;			
 			}
 		}
 	}
@@ -97,6 +103,8 @@ unsigned int simulate(Sim* s,int mode) {
 			ticks++;
 		}
 	}
+	
+	//Devuelve la cantidad de ticks.
 	return ticks;
 }
 

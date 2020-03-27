@@ -5,21 +5,28 @@
 #include <math.h>
 #include "grafic.h"
 #define CORRECTOR 0.000001
-void moveRobot(Robot* r, Baldosa* p, unsigned int width, unsigned int height) {		
-//Cambia posición y ángulo del robot.
 
-	Posicion nextBaldosa = getNextBaldosa(r);		//Pide la baldosa a la que debería moverse.
+//Cambia posición y ángulo del robot.
+void moveRobot(Robot* r, Baldosa* p, unsigned int width, unsigned int height) {		
+
+	//Pide la baldosa a la que debería moverse el robot.
+	Posicion nextBaldosa = getNextBaldosa(r);		
+
+	//Mientras se pase de los límites de la pantalla...
 	while (nextBaldosa.x <= 0 || nextBaldosa.x >= width || nextBaldosa.y <= 0 || nextBaldosa.y >= height) {
-		//Mientras se pase de los límites de la pantalla, genera un nuevo ángulo y pide la nueva baldosa.
+
+		//Genera un nuevo ángulo.
 		(*r).angle = static_cast <double> ((rand()) / (static_cast <double> (RAND_MAX)) * ANG_MAX);
+		
+		//Pide la nueva baldosa
 		nextBaldosa = getNextBaldosa(r);
 	}
-	//Cuando encuentra una opción válida, pasa la nueva posición del robot a los miembros X e Y de la esctructura Robot
-	// del robot pasado por parámetro.
+	/*Cuando encuentra una opción válida, pasa la nueva posición del robot a los miembros X e Y 
+	de la esctructura Robot del robot pasado por parámetro. */
 	r->x = nextBaldosa.x;
 	r->y = nextBaldosa.y;
 
-	//Cambioa a LIMPIO el estado de la nueva baldosa.
+	//Cambia a LIMPIO el estado de la nueva baldosa.
 	getCurrentBaldosa(p, (int)floor(nextBaldosa.y), (int)floor(nextBaldosa.x),width,height)->State = LIMPIO;
 }
 
@@ -45,10 +52,13 @@ Robot* createRobots(Baldosa*p, int count, unsigned int width, unsigned int heigh
 				paintBox(robs[i].x, robs[i].y, width, height,al_map_rgb(BL,BL,BL));
 		}
 	}
-	return robs;	//Devuelve el puntero.
+
+	//Devuelve el puntero.
+	return robs;	
 }
 
-void freeRobots(Robot* robs) {	//Libera memoria ocupada por puntero a estructura Robot.
+//Libera memoria ocupada por puntero a estructura Robot.
+void freeRobots(Robot* robs) {	
 	if (robs) {
 		delete [] robs;
 		robs = nullptr;

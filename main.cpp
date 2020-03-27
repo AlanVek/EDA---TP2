@@ -41,8 +41,8 @@ int main(int argC, char** argV) {
 		//Crea la simulación y la inicializa con los valores de userData.
 		s = createSimulation(userData.robot_amount, userData.width, userData.height, userData.mode);
 		
-		//Si la pudo crear, lo simula y guarda el resultado en tickTemp.
-		//Libera memoria de la simulación y muestra la cantidad de ticks que tomó.
+		/*Si la pudo crear, lo simula y guarda el resultado en tickTemp.
+		Libera memoria de la simulación y muestra la cantidad de ticks que tomó. */
 		if (s!=NULL){
 			tickTemp = simulate(s, userData.mode);
 			freeSimulation(s, userData.mode);
@@ -73,24 +73,24 @@ int main(int argC, char** argV) {
 				//Crea simulación.
 				s = createSimulation(m + 1, userData.width, userData.height, userData.mode);
 				
-				//Si la pudo crear, la simula y guarda el resultado en tickTemp.
-				//Suma el valor en la posición correspondiente de timeTaken y libera la simulación.
+				/*Si la pudo crear, la simula y guarda el resultado en tickTemp.
+				Suma el valor en la posición correspondiente de timeTaken y libera la simulación. */
 				if (s != NULL) {
 					tickTemp = simulate(s,userData.mode);
 					timeTaken[m] += tickTemp;
 					freeSimulation(s, userData.mode);
 				}
 
-				//Si no pudo crear la simulación, muestra mensaje de error, libera la memoria y devuelve -1.
-				//Sale del programa.
+				/*Si no pudo crear la simulación, muestra mensaje de error, libera la memoria y devuelve -1.
+				Sale del programa. */
 				else {
 					cout << "Failed to create simulation.\n";
 					freeSimulation(s,userData.mode);
 					return -1;
 				}
 			}
-			//Terminan las SIM_CANT simulaciones con m+1 robots. 
-			//Se divide el resultado por la cantidad para sacar promedio.
+			/*Terminan las SIM_CANT simulaciones con m+1 robots. 
+			Se divide el resultado por la cantidad para sacar promedio. */
 			timeTaken[m] /= SIM_CANT;
 
 			//Se muestra cuántos ticks tomó con m+1 robots y se incrementa contador.
@@ -98,13 +98,13 @@ int main(int argC, char** argV) {
 			m++;
 		}
 
-		//Ahora tengo dos datos para tener de input en la condición.
+		/*Ahora se tienen dos datos para tener de input en la condición.
 
-		//Ciclo for que termina cuando el módulo de la diferencia entre las cantidades de ticks que
+		Se hace un ciclo for que termina cuando el módulo de la diferencia entre las cantidades de ticks que
 		//toman en promedio las simulaciones con m-2 y m-1 robots es menor a 0,1.
 
-		//Se repite el procedimiento anterior de creado de simulación, simulado, chequeo de errores,
-		//relevado de datos y liberaciones de memoria.
+		Se repite el procedimiento anterior de creado de simulación, simulado, chequeo de errores,
+		relevado de datos y liberaciones de memoria en cada iteración. */ 
 		for (m = 2; abs((timeTaken[m - 2] - timeTaken[m - 1])) > MODE_2_LIM; m++) {
 			for (d = 0; d < SIM_CANT; d++) {
 				s = createSimulation(m + 1, userData.width, userData.height, userData.mode);
@@ -127,8 +127,8 @@ int main(int argC, char** argV) {
 		//Cuando termina, muestra cuántos robots se necesitaron para cumplir la condición especificada.
 		cout << "It took " << m << " robot(s)." << endl;
 
-		//Grafica los resultados con Allegro. Si no puede, muestra mensaje de error y devuelve -1. 
-		//Sale del programa.
+		/*Grafica los resultados con Allegro. Si no puede, muestra mensaje de error y devuelve -1. 
+		Sale del programa. */
 		if (!graph(timeTaken, m)) {
 			cout << "Failed to initialize Allegro.\n";
 			return -1;

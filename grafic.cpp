@@ -35,8 +35,8 @@ void updateGrid(int cant_ancho,int cant_alto,Baldosa*piso,Robot*r,unsigned int c
 				paintBox(j, i, cant_ancho, cant_alto, gris);				
 		}
 	}
-	//Vuelve a dibujar las flechas (se borraron al actualizar las casillas, pero es intencional, 
-	//ya que las flechas deben ir moviéndose).
+	/*Vuelve a dibujar las flechas (se borraron al actualizar las casillas, pero es intencional, 
+	ya que las flechas deben ir moviéndose). */
 	drawArrows(r, count, cant_ancho, cant_alto);
 	al_flip_display();		//Lo muestra.
 }

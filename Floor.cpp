@@ -6,7 +6,7 @@
 //Crea un array de tipo Baldosa de tamaño width*height.
 Baldosa* createFloor(int width, int height) {	
 	
-	//Aloca punter ret a array de Baldosa
+	//Aloca puntero ret a array de Baldosa
 	Baldosa* ret = new (std::nothrow) Baldosa[width * height];	
 	if (ret) {
 		//Pone todas las baldosas en SUCIO.
